@@ -4,87 +4,88 @@ const incColor = 'green';
 const decColor = 'red';
 
 // fake data
-var changeTemplate = [
-    {
-        "code": "AAA",
-        "dataSets": [
-            {
-                "col": "t1m",
-                "value": "10"
-            },
-            {
-                "col": "t1b",
-                "value": "20"
-            }
-        ]
-    },
-    {
-        "code": "BBB",
-        "dataSets": [
-            {
-                "col": "t3m",
-                "value": "5"
-            }
-        ]
-    }
-]
+// var changeTemplate = [
+//     {
+//         "code": "AAA",
+//         "dataSets": [
+//             {
+//                 "col": "t1m",
+//                 "value": "10"
+//             },
+//             {
+//                 "col": "t1b",
+//                 "value": "20"
+//             }
+//         ]
+//     },
+//     {
+//         "code": "BBB",
+//         "dataSets": [
+//             {
+//                 "col": "t3m",
+//                 "value": "5"
+//             }
+//         ]
+//     }
+// ]
 
 function initData(data) {
     console.log('client is handling datas!')
-    var datas = JSON.parse(ev.data);
-    datas.forEach(data => {
+    var datas = JSON.parse(data);
+    console.log(datas);
+
+    if (datas.listTP.length !== 0) {
         table.innerHTML +=
             `<tr>
-            <td id="code${data.code}">${data.code}</td>
-            <td id="tc${data.code}">${data.dataSets[0].value}</td>
-            <td id="tran${data.code}">${data.dataSets[1].value}</td>
-            <td id="san${data.code}">${data.dataSets[2].value}</td>
-            <td id="t1m${data.code}">${data.dataSets[3].value}</td>
-            <td id="t1b${data.code}">${data.dataSets[4].value}</td>
-            <td id="t2m${data.code}">${data.dataSets[5].value}</td>
-            <td id="t2b${data.code}">${data.dataSets[6].value}</td>
-            <td id="t3m${data.code}">${data.dataSets[7].value}</td>
-            <td id="t3b${data.code}">${data.dataSets[8].value}</td>
+            <td id="code${datas.symbol}">${datas.symbol}</td>
+            <td id="tc${datas.symbol}">${datas.thamChieu}</td>
+            <td id="tran${datas.symbol}">${datas.giaTran}</td>
+            <td id="san${datas.symbol}">${datas.giaSan}</td>
+            <td id="t1b${datas.symbol}">${datas.listTP.at(0).gia}</td>
+            <td id="t1m${datas.symbol}">${datas.listTP.at(1).gia}</td>
+            <td id="t2b${datas.symbol}">${datas.listTP.at(2).gia}</td>
+            <td id="t2m${datas.symbol}">${datas.listTP.at(3).gia}</td>
+            <td id="t3b${datas.symbol}">${datas.listTP.at(4).gia}</td>
+            <td id="t3m${datas.symbol}">${datas.listTP.at(5).gia}</td>
             </tr>`;
-    });
+    }
+    else {
+        table.innerHTML +=
+            `<tr>
+            <td id="code${datas.symbol}">${datas.symbol}</td>
+            <td id="tc${datas.symbol}">${datas.thamChieu}</td>
+            <td id="tran${datas.symbol}">${datas.giaTran}</td>
+            <td id="san${datas.symbol}">${datas.giaSan}</td>
+            <td id="t1b${datas.symbol}">Chua cap nhat</td>
+            <td id="t1m${datas.symbol}">Chua cap nhat</td>
+            <td id="t2b${datas.symbol}">Chua cap nhat</td>
+            <td id="t2m${datas.symbol}">Chua cap nhat</td>
+            <td id="t3b${datas.symbol}">Chua cap nhat</td>
+            <td id="t3m${datas.symbol}">Chua cap nhat</td>
+            </tr>`;
+    }
 
     // setTimeout(() => socket.send('update'),
     //     5000);
 }
 
 function updateData(data) {
-    setInterval(() => {
-        // console.log('client is updating data!');
-
-        // // fake data change
-        // console.log('update');
-        // changeTemplate.at(0).dataSets.at(0).value
-        //     = parseInt(changeTemplate.at(0).dataSets.at(0).value) + 5;
-
-        // changeTemplate.at(0).dataSets.at(1).value
-        //     = parseInt(changeTemplate.at(0).dataSets.at(1).value) + 15;
-
-        // changeTemplate.at(1).dataSets.at(0).value
-        //     = parseInt(changeTemplate.at(1).dataSets.at(0).value) + 1;
-
-
-
-
-    }, 1000);
-
     var datas = JSON.parse(data);
 
-    for (var i = 0; i < datas.length; i++) {
-        for (var j = 0; j < datas.at(i).dataSets.length; j++) {
-            // update data
-            var cid = datas.at(i).dataSets.at(j).col + "" + datas.at(i).code;
-            var el = document.getElementById(`${cid}`);
-            el.innerHTML = parseInt(datas.at(i).dataSets.at(j).value);
+    console.log(datas);
 
-            // update color
-            el.style.backgroundColor = incColor;
-        }
-    }
+    var elMACK = document.getElementById(`code${datas.symbol}`).innerHTML = datas.symbol;
+    var elTC = document.getElementById(`tc${datas.symbol}`).innerHTML = datas.thamChieu;
+    var elTRAN = document.getElementById(`tran${datas.symbol}`).innerHTML = datas.giaTran;
+    var elSAN = document.getElementById(`san${datas.symbol}`).innerHTML = datas.giaSan;
+    var elT1B = document.getElementById(`t1b${datas.symbol}`).innerHTML = (datas.listTP.at(0).gia !== null ? datas.listTP.at(0).gia : document.getElementById(`t1b${datas.symbol}`).innerHTML);
+    var elT1M = document.getElementById(`t1m${datas.symbol}`).innerHTML = (datas.listTP.at(1).gia !== null ? datas.listTP.at(1).gia : document.getElementById(`t1m${datas.symbol}`).innerHTML);
+    var elT2B = document.getElementById(`t2b${datas.symbol}`).innerHTML = (datas.listTP.at(2).gia !== null ? datas.listTP.at(2).gia : document.getElementById(`t2b${datas.symbol}`).innerHTML);
+    var elT2M = document.getElementById(`t2m${datas.symbol}`).innerHTML = (datas.listTP.at(3).gia !== null ? datas.listTP.at(3).gia : document.getElementById(`t2m${datas.symbol}`).innerHTML);
+    var elT3B = document.getElementById(`t3b${datas.symbol}`).innerHTML = (datas.listTP.at(4).gia !== null ? datas.listTP.at(4).gia : document.getElementById(`t3b${datas.symbol}`).innerHTML);
+    var elT3M = document.getElementById(`t3m${datas.symbol}`).innerHTML = (datas.listTP.at(5).gia !== null ? datas.listTP.at(5).gia : document.getElementById(`t3m${datas.symbol}`).innerHTML);
+
+
 
     // reset color
     setTimeout(() => {
@@ -107,7 +108,7 @@ function startApp() {
         if (status === 'create') {
             initData(ev.data);
         }
-        if (ev.data === 'update') {
+        if (status === 'update') {
             updateData(ev.data);
         }
 
