@@ -65,8 +65,8 @@ function initData(data) {
             </tr>`;
     }
 
-    // setTimeout(() => socket.send('update'),
-    //     5000);
+    setTimeout(() => socket.send('update'),
+        2000);
 }
 
 function updateData(data) {
@@ -75,17 +75,37 @@ function updateData(data) {
     console.log(datas);
 
     var elMACK = document.getElementById(`code${datas.symbol}`).innerHTML = datas.symbol;
-    var elTC = document.getElementById(`tc${datas.symbol}`).innerHTML = datas.thamChieu;
-    var elTRAN = document.getElementById(`tran${datas.symbol}`).innerHTML = datas.giaTran;
-    var elSAN = document.getElementById(`san${datas.symbol}`).innerHTML = datas.giaSan;
-    var elT1B = document.getElementById(`t1b${datas.symbol}`).innerHTML = (datas.listTP.at(0).gia !== null ? datas.listTP.at(0).gia : document.getElementById(`t1b${datas.symbol}`).innerHTML);
-    var elT1M = document.getElementById(`t1m${datas.symbol}`).innerHTML = (datas.listTP.at(1).gia !== null ? datas.listTP.at(1).gia : document.getElementById(`t1m${datas.symbol}`).innerHTML);
-    var elT2B = document.getElementById(`t2b${datas.symbol}`).innerHTML = (datas.listTP.at(2).gia !== null ? datas.listTP.at(2).gia : document.getElementById(`t2b${datas.symbol}`).innerHTML);
-    var elT2M = document.getElementById(`t2m${datas.symbol}`).innerHTML = (datas.listTP.at(3).gia !== null ? datas.listTP.at(3).gia : document.getElementById(`t2m${datas.symbol}`).innerHTML);
-    var elT3B = document.getElementById(`t3b${datas.symbol}`).innerHTML = (datas.listTP.at(4).gia !== null ? datas.listTP.at(4).gia : document.getElementById(`t3b${datas.symbol}`).innerHTML);
-    var elT3M = document.getElementById(`t3m${datas.symbol}`).innerHTML = (datas.listTP.at(5).gia !== null ? datas.listTP.at(5).gia : document.getElementById(`t3m${datas.symbol}`).innerHTML);
+    console.log(datas.symbol)
+    document.getElementById(`tc${datas.symbol}`).innerHTML = datas.thamChieu;
+    document.getElementById(`tran${datas.symbol}`).innerHTML = datas.giaTran;
+    document.getElementById(`san${datas.symbol}`).innerHTML = datas.giaSan;
 
+    datas.listTP.forEach(item => {
+        console.log(item);
+        if (item.top == "1" && item.ben == "Offer") {
+            document.getElementById(`t1b${elMACK}`).innerHTML = item.gia;
+        }
 
+        if (item.top == "1" && item.ben == "Bid") {
+            document.getElementById(`t1m${elMACK}`).innerHTML = item.gia;
+        }
+
+        if (item.top == "2" && item.ben == "Offer") {
+            document.getElementById(`t2b${elMACK}`).innerHTML = item.gia;
+        }
+
+        if (item.top == "2" && item.ben == "Bid") {
+            document.getElementById(`t2m${elMACK}`).innerHTML = item.gia;
+        }
+
+        if (item.top == "3" && item.ben == "Offer") {
+            document.getElementById(`t3b${elMACK}`).innerHTML = item.gia;
+        }
+
+        if (item.top == "3" && item.ben == "Bid") {
+            document.getElementById(`t3m${elMACK}`).innerHTML = item.gia;
+        }
+    });
 
     // reset color
     setTimeout(() => {
@@ -116,3 +136,10 @@ function startApp() {
 }
 
 startApp();
+
+
+/*
+{top: '2', ben: 'Bid', gia: '6400', khoiLuong: '700'}
+{top: '3', ben: 'Offer', gia: '7400', khoiLuong: '500'}
+{top: '3', ben: 'Bid', gia: '6300', khoiLuong: '1500'}
+*/
