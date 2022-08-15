@@ -47,7 +47,8 @@ function updateData(data) {
 
     console.log(datas);
 
-    var elMACK = document.getElementById(`code${datas.symbol}`).innerHTML = datas.symbol;
+    var elMACK = document.getElementById(`code${datas.symbol}`);
+    elMACK.innerHTML = datas.symbol;
     console.log(datas.symbol)
     document.getElementById(`tc${datas.symbol}`).innerHTML = datas.thamChieu;
     document.getElementById(`tran${datas.symbol}`).innerHTML = datas.giaTran;
@@ -56,42 +57,42 @@ function updateData(data) {
     datas.listTP.forEach(item => {
         console.log(item);
         if (item.top == "1" && item.ben == "Offer") {
-            var el = document.getElementById(`t1b${elMACK}`);
+            var el = document.getElementById(`t1b${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
         }
 
         if (item.top == "1" && item.ben == "Bid") {
-            var el = document.getElementById(`t1m${elMACK}`);
+            var el = document.getElementById(`t1m${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
         }
 
         if (item.top == "2" && item.ben == "Offer") {
-            var el = document.getElementById(`t2b${elMACK}`);
+            var el = document.getElementById(`t2b${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
         }
 
         if (item.top == "2" && item.ben == "Bid") {
-            var el = document.getElementById(`t2m${elMACK}`);
+            var el = document.getElementById(`t2m${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
         }
 
         if (item.top == "3" && item.ben == "Offer") {
-            var el = document.getElementById(`t3b${elMACK}`);
+            var el = document.getElementById(`t3b${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
         }
 
         if (item.top == "3" && item.ben == "Bid") {
-            var el = document.getElementById(`t3m${elMACK}`);
+            var el = document.getElementById(`t3m${datas.symbol}`);
             el.innerHTML = item.gia;
             el.style.backgroundColor = incColor;
 
@@ -103,7 +104,7 @@ function updateData(data) {
             tds.forEach(td => {
                 td.style.backgroundColor = 'transparent'
             });
-        }, 500);
+        }, 2000);
     });
 
 
