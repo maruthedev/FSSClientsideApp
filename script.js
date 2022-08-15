@@ -1,33 +1,6 @@
 var table = document.getElementById('table');
 const socket = SockJS('http://localhost:8080/topPrice');
-const incColor = 'green';
-const decColor = 'red';
-
-// fake data
-// var changeTemplate = [
-//     {
-//         "code": "AAA",
-//         "dataSets": [
-//             {
-//                 "col": "t1m",
-//                 "value": "10"
-//             },
-//             {
-//                 "col": "t1b",
-//                 "value": "20"
-//             }
-//         ]
-//     },
-//     {
-//         "code": "BBB",
-//         "dataSets": [
-//             {
-//                 "col": "t3m",
-//                 "value": "5"
-//             }
-//         ]
-//     }
-// ]
+const incColor = 'pink';
 
 function initData(data) {
     console.log('client is handling datas!')
@@ -83,27 +56,45 @@ function updateData(data) {
     datas.listTP.forEach(item => {
         console.log(item);
         if (item.top == "1" && item.ben == "Offer") {
-            document.getElementById(`t1b${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t1b${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
 
         if (item.top == "1" && item.ben == "Bid") {
-            document.getElementById(`t1m${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t1m${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
 
         if (item.top == "2" && item.ben == "Offer") {
-            document.getElementById(`t2b${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t2b${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
 
         if (item.top == "2" && item.ben == "Bid") {
-            document.getElementById(`t2m${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t2m${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
 
         if (item.top == "3" && item.ben == "Offer") {
-            document.getElementById(`t3b${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t3b${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
 
         if (item.top == "3" && item.ben == "Bid") {
-            document.getElementById(`t3m${elMACK}`).innerHTML = item.gia;
+            var el = document.getElementById(`t3m${elMACK}`);
+            el.innerHTML = item.gia;
+            el.style.backgroundColor = incColor;
+
         }
     });
 
@@ -113,7 +104,7 @@ function updateData(data) {
         tds.forEach(td => {
             td.style.backgroundColor = 'transparent'
         });
-    }, 200);
+    }, 500);
 }
 
 function startApp() {
