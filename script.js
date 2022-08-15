@@ -58,44 +58,50 @@ function updateData(data) {
         console.log(item);
         if (item.top == "1" && item.ben == "Offer") {
             var el = document.getElementById(`t1b${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         if (item.top == "1" && item.ben == "Bid") {
             var el = document.getElementById(`t1m${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         if (item.top == "2" && item.ben == "Offer") {
             var el = document.getElementById(`t2b${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         if (item.top == "2" && item.ben == "Bid") {
             var el = document.getElementById(`t2m${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         if (item.top == "3" && item.ben == "Offer") {
             var el = document.getElementById(`t3b${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         if (item.top == "3" && item.ben == "Bid") {
             var el = document.getElementById(`t3m${datas.symbol}`);
-            el.innerHTML = item.gia;
-            el.style.backgroundColor = incColor;
-
+            if (parseInt(el.innerHTML) !== parseInt(item.gia)) {
+                el.innerHTML = item.gia;
+                el.style.backgroundColor = incColor;
+            }
         }
 
         // reset color
