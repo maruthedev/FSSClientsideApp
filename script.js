@@ -96,15 +96,17 @@ function updateData(data) {
             el.style.backgroundColor = incColor;
 
         }
+
+        // reset color
+        setTimeout(() => {
+            var tds = table.querySelectorAll('td');
+            tds.forEach(td => {
+                td.style.backgroundColor = 'transparent'
+            });
+        }, 500);
     });
 
-    // reset color
-    setTimeout(() => {
-        var tds = table.querySelectorAll('td');
-        tds.forEach(td => {
-            td.style.backgroundColor = 'transparent'
-        });
-    }, 500);
+
 }
 
 function startApp() {
