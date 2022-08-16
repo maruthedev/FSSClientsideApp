@@ -1,45 +1,90 @@
 var table = document.getElementById('table');
-const socket = SockJS('http://localhost:8080/topPrice');
+const socket = SockJS('http://192.168.151.9:8080/topPrice');
+const api = "http://192.168.151.9:8080/stockInfo";
 const incColor = 'pink';
 
-function initData(data) {
-    console.log('client is handling datas!')
-    var datas = JSON.parse(data);
-    console.log(datas);
+async function initData() {
+    await fetch(api, {
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(json => {
+            console.log(json);
+            json.forEach(item => {
+                console.log(item);
+                table.innerHTML +=
+                    `<tr id="line${item.symbol}">
+                        <td id="code${item.symbol}">${item.symbol}</td>
+                        <td id="tc${item.symbol}">${item.thamChieu}</td>
+                        <td id="tran${item.symbol}">${item.giaTran}</td>
+                        <td id="san${item.symbol}">${item.giaSan}</td> 
+                        <td id="t1b${item.symbol}"></td>
+                        <td id="t1m${item.symbol}"></td>
+                        <td id="t2b${item.symbol}"></td>
+                        <td id="t2m${item.symbol}"></td>
+                        <td id="t3b${item.symbol}"></td>
+                        <td id="t3m${item.symbol}"></td> 
+                    </tr> `
+                    ;
 
-    if (datas.listTP.length !== 0) {
-        table.innerHTML +=
-            `<tr>
-            <td id="code${datas.symbol}">${datas.symbol}</td>
-            <td id="tc${datas.symbol}">${datas.thamChieu}</td>
-            <td id="tran${datas.symbol}">${datas.giaTran}</td>
-            <td id="san${datas.symbol}">${datas.giaSan}</td>
-            <td id="t1b${datas.symbol}">${datas.listTP.at(0).gia}</td>
-            <td id="t1m${datas.symbol}">${datas.listTP.at(1).gia}</td>
-            <td id="t2b${datas.symbol}">${datas.listTP.at(2).gia}</td>
-            <td id="t2m${datas.symbol}">${datas.listTP.at(3).gia}</td>
-            <td id="t3b${datas.symbol}">${datas.listTP.at(4).gia}</td>
-            <td id="t3m${datas.symbol}">${datas.listTP.at(5).gia}</td>
-            </tr>`;
-    }
-    else {
-        table.innerHTML +=
-            `<tr>
-            <td id="code${datas.symbol}">${datas.symbol}</td>
-            <td id="tc${datas.symbol}">${datas.thamChieu}</td>
-            <td id="tran${datas.symbol}">${datas.giaTran}</td>
-            <td id="san${datas.symbol}">${datas.giaSan}</td>
-            <td id="t1b${datas.symbol}">Chua cap nhat</td>
-            <td id="t1m${datas.symbol}">Chua cap nhat</td>
-            <td id="t2b${datas.symbol}">Chua cap nhat</td>
-            <td id="t2m${datas.symbol}">Chua cap nhat</td>
-            <td id="t3b${datas.symbol}">Chua cap nhat</td>
-            <td id="t3m${datas.symbol}">Chua cap nhat</td>
-            </tr>`;
-    }
+                if (item.listTP.length > 0) {
+                    item.listTP.forEach(i => {
+                        console.log(i);
+                        if (i.top == "1" && i.ben == "Offer") {
+                            var el = document.getElementById(`t1b${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
 
-    setTimeout(() => socket.send('update'),
-        2000);
+                        if (i.top == "1" && i.ben == "Bid") {
+                            var el = document.getElementById(`t1m${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
+
+                        if (i.top == "2" && i.ben == "Offer") {
+                            var el = document.getElementById(`t2b${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
+
+                        if (i.top == "2" && i.ben == "Bid") {
+                            var el = document.getElementById(`t2m${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
+
+                        if (i.top == "3" && i.ben == "Offer") {
+                            var el = document.getElementById(`t3b${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
+
+                        if (i.top == "3" && i.ben == "Bid") {
+                            var el = document.getElementById(`t3m${item.symbol}`);
+                            if (parseInt(el.innerHTML) !== parseInt(i.gia)) {
+                                el.innerHTML = i.gia;
+                            }
+                        }
+                    })
+                }
+            })
+
+            setTimeout(() => socket.send('update'),
+                2000);
+        })
+        .catch(ex => console.log(ex));
 }
 
 function updateData(data) {
@@ -117,29 +162,19 @@ function updateData(data) {
 }
 
 function startApp() {
+    initData()
+        .then(socketOnUpdate);
+}
+
+function socketOnUpdate() {
     socket.onopen = function () {
-        console.log('connected!')
-        socket.send('init');
-    }
+        console.log('connected!');
+    };
 
     socket.onmessage = function (ev) {
-        var status = JSON.parse(ev.data).status;
-        console.log(status);
-        if (status === 'create') {
-            initData(ev.data);
-        }
-        if (status === 'update') {
-            updateData(ev.data);
-        }
-
-    }
+        console.log(ev);
+        updateData(ev.data);
+    };
 }
 
 startApp();
-
-
-/*
-{top: '2', ben: 'Bid', gia: '6400', khoiLuong: '700'}
-{top: '3', ben: 'Offer', gia: '7400', khoiLuong: '500'}
-{top: '3', ben: 'Bid', gia: '6300', khoiLuong: '1500'}
-*/
