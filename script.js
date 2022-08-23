@@ -1,6 +1,6 @@
 var table = document.getElementById('table');
-const socket = SockJS('http://192.168.151.9:8080/topPrice');
-const api = "http://192.168.151.9:8080/stockInfo";
+const socket = SockJS('http://192.168.193.222:8080/register');
+const api = "http://192.168.193.222:8080/stockInfo";
 const incColor = 'pink';
 
 async function initData() {
@@ -171,10 +171,15 @@ function socketOnUpdate() {
         console.log('connected!');
     };
 
-    socket.onmessage = function (ev) {
-        console.log(ev);
-        updateData(ev.data);
-    };
+    var webstompClient = webstomp.over(socket);
+
+    webstompClient.connect({
+    }, frame => {
+        console.log('webstomp is connected!');
+        webstompClient.subscribe('/topic/topPrice', message => {
+            updateData(message.body);
+        })
+    })
 }
 
 startApp();

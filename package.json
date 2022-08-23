@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "json-server": "^0.17.0"
+    "json-server": "^0.17.0",
+    "nodejs": "^0.0.0",
+    "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.1",
+    "webstomp-client": "^1.2.6"
   }
 }
